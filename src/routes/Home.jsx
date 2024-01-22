@@ -71,7 +71,10 @@ export default function Home() {
                 viewArray[v](false);
             }
         }
-        handleDrawerToggle();
+
+        if (mobileOpen) {
+            handleDrawerToggle();
+        }
     };
 
     const handleDrawerClose = () => {
@@ -91,18 +94,28 @@ export default function Home() {
 
     const drawer = (
         <div>
-            <ListItem disablePadding onClick={() => handleBoxView(setAccount)}>
+            <Toolbar sx={{ backgroundColor: "#f54747" }}>
+                <ListItem
+                    disablePadding
+                    onClick={() => handleBoxView(setAccount)}
+                >
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <AccountBoxIcon
+                                fontSize="large"
+                                sx={{ color: "#fff" }}
+                            />
+                        </ListItemIcon>
+                        <ListItemText
+                            sx={{ color: "#fff" }}
+                            primary="Account"
+                        />
+                    </ListItemButton>
+                </ListItem>
+            </Toolbar>
+            <ListItem disablePadding sx={{ backgroundColor: "#ffb084" }}>
                 <ListItemButton>
-                    <ListItemIcon>
-                        <AccountBoxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Your Account" />
-                </ListItemButton>
-            </ListItem>
-            <Divider />
-            <ListItem disablePadding>
-                <ListItemButton>
-                    <Typography variant="h5">Staff Zone</Typography>
+                    <Typography variant="h6">Staff Zone</Typography>
                 </ListItemButton>
             </ListItem>
             <Divider />
@@ -112,7 +125,7 @@ export default function Home() {
             >
                 <ListItemButton>
                     <ListItemIcon>
-                        <ContactsIcon />
+                        <ContactsIcon color="error" />
                     </ListItemIcon>
                     <ListItemText primary="Search Customer" />
                 </ListItemButton>
@@ -123,7 +136,7 @@ export default function Home() {
             >
                 <ListItemButton>
                     <ListItemIcon>
-                        <AddReactionIcon />
+                        <AddReactionIcon color="error" />
                     </ListItemIcon>
                     <ListItemText primary="Add Customer" />
                 </ListItemButton>
@@ -134,7 +147,7 @@ export default function Home() {
             >
                 <ListItemButton>
                     <ListItemIcon>
-                        <MovieIcon />
+                        <MovieIcon color="error" />
                     </ListItemIcon>
                     <ListItemText primary="Search Movie" />
                 </ListItemButton>
@@ -142,7 +155,7 @@ export default function Home() {
             <ListItem disablePadding onClick={() => handleBoxView(setAddMovie)}>
                 <ListItemButton>
                     <ListItemIcon>
-                        <VideoCallIcon />
+                        <VideoCallIcon color="error" />
                     </ListItemIcon>
                     <ListItemText primary="Add Movie" />
                 </ListItemButton>
@@ -153,7 +166,7 @@ export default function Home() {
             >
                 <ListItemButton>
                     <ListItemIcon>
-                        <HelpCenterIcon />
+                        <HelpCenterIcon color="error" />
                     </ListItemIcon>
                     <ListItemText primary="Help" />
                 </ListItemButton>
@@ -162,9 +175,12 @@ export default function Home() {
             {true && (
                 <>
                     <Divider />
-                    <ListItem disablePadding>
+                    <ListItem
+                        disablePadding
+                        sx={{ backgroundColor: "#ffb084" }}
+                    >
                         <ListItemButton>
-                            <Typography variant="h5">Manager Zone</Typography>
+                            <Typography variant="h6">Manager Zone</Typography>
                         </ListItemButton>
                     </ListItem>
                     <Divider />
@@ -174,7 +190,7 @@ export default function Home() {
                     >
                         <ListItemButton>
                             <ListItemIcon>
-                                <BadgeIcon />
+                                <BadgeIcon color="error" />
                             </ListItemIcon>
                             <ListItemText primary="Search Employee" />
                         </ListItemButton>
@@ -185,7 +201,7 @@ export default function Home() {
                     >
                         <ListItemButton>
                             <ListItemIcon>
-                                <PersonAddIcon />
+                                <PersonAddIcon color="error" />
                             </ListItemIcon>
                             <ListItemText primary="Add Employee" />
                         </ListItemButton>
@@ -196,7 +212,7 @@ export default function Home() {
                     >
                         <ListItemButton>
                             <ListItemIcon>
-                                <StoreIcon />
+                                <StoreIcon color="error" />
                             </ListItemIcon>
                             <ListItemText primary="Search Stores" />
                         </ListItemButton>
@@ -207,7 +223,7 @@ export default function Home() {
                     >
                         <ListItemButton>
                             <ListItemIcon>
-                                <HelpCenterIcon />
+                                <HelpCenterIcon color="error" />
                             </ListItemIcon>
                             <ListItemText primary="Help" />
                         </ListItemButton>
@@ -237,7 +253,7 @@ export default function Home() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <h1>Groovy Movie Rental</h1> <MovieIcon />
+                    <h1>Groovy Movie Rental</h1>&nbsp; <MovieIcon />
                 </Toolbar>
             </AppBar>
             <Box
