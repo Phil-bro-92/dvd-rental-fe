@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import { Add } from "@mui/icons-material";
+import IndvCustomer from "../components/IndvCustomer";
 
 export default function SearchCustomer() {
     const url = process.env.REACT_APP_API_URL;
@@ -12,51 +13,51 @@ export default function SearchCustomer() {
     useEffect(() => {
         axios
             .get(`${url}/all-customers`)
-            .then((res) => {
+            .then(res => {
                 console.log(res.data);
                 setCustomers(res.data);
             })
-            .catch((err) => {
+            .catch(err => {
                 console.log(err);
             });
     }, []);
 
-    const searchCustomer = (searchTerm) => {
+    const searchCustomer = searchTerm => {
         let data = {
-            searchTerm: searchTerm,
+            searchTerm: searchTerm
         };
         axios
             .post(`${url}/search-customers`, data)
-            .then((res) => {
+            .then(res => {
                 console.log(res.data);
                 setCustomers(res.data);
             })
-            .catch((err) => {
+            .catch(err => {
                 console.log(err);
             });
     };
 
-    const searchCustomerId = (searchTerm) => {
+    const searchCustomerId = searchTerm => {
         let data = {
-            searchTerm: searchTerm,
+            searchTerm: searchTerm
         };
 
         if (searchTerm === "") {
             axios
                 .get(`${url}/all-customers`)
-                .then((res) => {
+                .then(res => {
                     setCustomers(res.data);
                 })
-                .catch((err) => {
+                .catch(err => {
                     console.log(err);
                 });
         } else {
             axios
                 .post(`${url}/search-customers-id`, data)
-                .then((res) => {
+                .then(res => {
                     setCustomers(res.data);
                 })
-                .catch((err) => {
+                .catch(err => {
                     console.log(err);
                 });
         }
@@ -72,15 +73,14 @@ export default function SearchCustomer() {
                     type="text"
                     label="Search by customer name"
                     variant="standard"
-                    onChange={(e) => searchCustomer(e.target.value)}
+                    onChange={e => searchCustomer(e.target.value)}
                 />
                 <TextField
                     className="input_field"
                     type="number"
                     label="Search by customer ID"
                     variant="standard"
-                    onChange={(e) => searchCustomerId(e.target.value)}
-                   
+                    onChange={e => searchCustomerId(e.target.value)}
                 />
             </section>
             {customers.length > 0 ? (
@@ -97,15 +97,7 @@ export default function SearchCustomer() {
                         {customers &&
                             customers.map((customer, i) => {
                                 return (
-                                    <tr key={i}>
-                                        <td>
-                                            <b>{customer.last_name}</b>,{" "}
-                                            {customer.first_name}
-                                        </td>
-                                        <td>{customer.email}</td>
-                                        <td>{`${customer.address}, ${customer.city}, ${customer.country}, ${customer.postal_code}`}</td>
-                                        <td>{customer.phone}</td>
-                                    </tr>
+                                    <IndvCustomer key={i} customer={customer} />
                                 );
                             })}
                     </tbody>
