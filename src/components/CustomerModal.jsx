@@ -67,7 +67,9 @@ export default function CustomerModal({ customer, handleClose }) {
                 </table>
             </Typography>
 
-            <Button onClick={handleClose}>close</Button>
+            <Button variant="contained" color="error" onClick={handleClose}>
+                close
+            </Button>
         </Box>
     );
 }
