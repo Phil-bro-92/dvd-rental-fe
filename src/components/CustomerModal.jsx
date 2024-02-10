@@ -48,23 +48,34 @@ export default function CustomerModal({ customer, handleClose }) {
                 <p>{customer.phone}</p>
             </Typography>
             <Typography id="spring-modal-description" sx={{ mt: 2 }}>
-                <h2>Rentals</h2>
-                <table className="rental_table">
-                    <thead>
-                        <tr>
-                            <th>Film</th>
-                            <th>Rent Date</th>
-                            <th>Return Date</th>
-                            <th>Rental Duration</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rentals &&
-                            rentals.map((rental, i) => {
-                                return <IndvRental key={i} rental={rental} />;
-                            })}
-                    </tbody>
-                </table>
+                {rentals.length > 0 ? (
+                    <>
+                        <h2>Rentals</h2>
+                        <table className="rental_table">
+                            <thead>
+                                <tr>
+                                    <th>Film</th>
+                                    <th>Rent Date</th>
+                                    <th>Return Date</th>
+                                    <th>Rental Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {rentals &&
+                                    rentals.map((rental, i) => {
+                                        return (
+                                            <IndvRental
+                                                key={i}
+                                                rental={rental}
+                                            />
+                                        );
+                                    })}
+                            </tbody>
+                        </table>
+                    </>
+                ) : (
+                    <p style={{ fontWeight: 600 }}>No previous rentals</p>
+                )}
             </Typography>
 
             <Button variant="contained" color="error" onClick={handleClose}>

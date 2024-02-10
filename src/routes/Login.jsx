@@ -19,6 +19,18 @@ export default function Login() {
     const [message, setMessage] = useState("");
     const [severity, setSeverity] = useState("");
 
+    const showAlert = (message, severity, duration = 3000) => {
+        setMessage(message);
+        setSeverity(severity);
+        setAlert(true);
+
+        setTimeout(() => {
+            setAlert(false);
+            setMessage("");
+            setSeverity("");
+        }, duration);
+    };
+
     const handleLogin = () => {
         let data = {
             email: email,

@@ -71,7 +71,7 @@ export default function AddCustomer() {
             address2: addressTwo,
             city: city,
             phone: phone,
-            postal_code: postcode
+            postal_code: postcode,
         };
         const requiredFields = [
             firstName,
@@ -87,20 +87,22 @@ export default function AddCustomer() {
             showAlert("Please enter a valid email address", "warning");
         } else if (!phone.match(regexPatterns.phone)) {
             showAlert("Please enter a valid phone number", "warning");
-        } else if (!postcode.match(regexPatterns.postcode)) {
+        } else if (!postcode.match(regexPatterns.postCode)) {
             showAlert("Please enter a valid postcode", "warning");
         } else {
             axios
                 .post(`${url}/new-customer`, data)
                 .then((res) => {
-                    console.log(res.data);
+                    showAlert("Customer successfully registered", "success");
+                    handleClearForm();
                 })
                 .catch((err) => {
                     console.log(err);
-                    showAlert(
-                        "Something went wrong - Please try again",
-                        "error"
-                    );
+                    // if (err.response.data.message) {
+                    showAlert(`${err.response.data.message}`, "error");
+                    // } else {
+                    //     showAlert(`${err.response.data.message}`, "error");
+                    // }
                 });
         }
     };
@@ -177,7 +179,7 @@ export default function AddCustomer() {
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={city}
-                            className="input_field"
+                            className="address_field"
                             label="City"
                             onChange={(e) => setCity(e.target.value)}
                         >
@@ -189,18 +191,18 @@ export default function AddCustomer() {
                                 );
                             })}
                         </Select>{" "}
-                        <TextField
-                            onChange={(e) => setPostCode(e.target.value)}
-                            value={postcode}
-                            className="input_field"
-                            type="text"
-                            label="Postcode"
-                            variant="outlined"
-                            inputProps={{ maxLength: 8 }}
-                            required
-                        />
                     </FormControl>
                 </Box>
+                <TextField
+                    onChange={(e) => setPostCode(e.target.value)}
+                    value={postcode}
+                    className="address_field"
+                    type="text"
+                    label="Postcode"
+                    variant="outlined"
+                    inputProps={{ maxLength: 8 }}
+                    required
+                />
                 {!alert ? (
                     <section className="btn_section">
                         <Button

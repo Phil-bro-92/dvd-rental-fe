@@ -1,0 +1,14 @@
+@import "./variables.scss";
+
+.search_movies {
+    .search_inputs {
+        .input_field {
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+    }
+
+    .movie_table {
+        @include table;
+    }
+}
