@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField";
 import Logo from "../assets/dvd-logo.jpg";
 import Alert from "@mui/material/Alert";
 import "../styles/login.scss";
+import CryptoJS from "crypto-js";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -32,9 +33,20 @@ export default function Login() {
     };
 
     const handleLogin = () => {
+        const secretKey = crypto.getRandomValues(new Uint8Array(32));
+
+        // Convert the byte array to a hexadecimal string representation
+        const hexKey = Array.from(secretKey)
+            .map((byte) => byte.toString(16).padStart(2, "0"))
+            .join("");
+        const encryptedPassword = CryptoJS.AES.encrypt(
+            password,
+            hexKey
+        ).toString();
+
         let data = {
             email: email,
-            password: password,
+            password: encryptedPassword,
         };
 
         if (email === "" || password === "") {
@@ -60,11 +72,11 @@ export default function Login() {
                 .post(`${url}/login`, data)
                 .then((res) => {
                     console.log(res.data);
-                    const user = JSON.stringify(res.data.user);
-                    const token = res.data.token;
+                    const user = JSON.stringify(res.data);
+                    // const token = res.data.token;
                     localStorage.setItem("customer", user);
-                    localStorage.setItem("token", token);
-                    navigate("/");
+                    // localStorage.setItem("token", token);
+                    navigate("/home ");
                 })
                 .catch((err) => {
                     console.log(err);

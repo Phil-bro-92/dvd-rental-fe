@@ -1,19 +1,24 @@
 import "../styles/searchcustomer.scss";
+import "../styles/loader.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import IndvCustomer from "../components/IndvCustomer";
+import Loader from "../components/Loader";
 
 export default function SearchCustomer() {
     const url = process.env.REACT_APP_API_URL;
     const [customers, setCustomers] = useState([]);
+    const [loader, setLoader] = useState(true);
 
     useEffect(() => {
         axios
             .get(`${url}/all-customers`)
             .then((res) => {
-                console.log(res.data);
                 setCustomers(res.data);
+                setTimeout(() => {
+                    setLoader(false);
+                }, 3500);
             })
             .catch((err) => {
                 console.log(err);
@@ -64,44 +69,53 @@ export default function SearchCustomer() {
     return (
         <main className="search_customers">
             <h1>Customer Records</h1>{" "}
-            <section className="search_inputs">
-                {" "}
-                <TextField
-                    className="input_field"
-                    type="text"
-                    label="Search by customer name"
-                    variant="standard"
-                    onChange={(e) => searchCustomer(e.target.value)}
-                />
-                <TextField
-                    className="input_field"
-                    type="number"
-                    label="Search by customer ID"
-                    variant="standard"
-                    onChange={(e) => searchCustomerId(e.target.value)}
-                />
-            </section>
-            {customers.length > 0 ? (
-                <table className="customer_table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Address</th>
-                            <th>Phone</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {customers &&
-                            customers.map((customer, i) => {
-                                return (
-                                    <IndvCustomer key={i} customer={customer} />
-                                );
-                            })}
-                    </tbody>
-                </table>
+            {!loader ? (
+                <section className="search_inputs">
+                    {" "}
+                    <TextField
+                        className="input_field"
+                        type="text"
+                        label="Search by customer name"
+                        variant="standard"
+                        onChange={(e) => searchCustomer(e.target.value)}
+                    />
+                    <TextField
+                        className="input_field"
+                        type="number"
+                        label="Search by customer ID"
+                        variant="standard"
+                        onChange={(e) => searchCustomerId(e.target.value)}
+                    />
+                </section>
+            ) : null}
+            {!loader ? (
+                customers.length > 0 ? (
+                    <table className="customer_table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {customers &&
+                                customers.map((customer, i) => {
+                                    return (
+                                        <IndvCustomer
+                                            key={i}
+                                            customer={customer}
+                                        />
+                                    );
+                                })}
+                        </tbody>
+                    </table>
+                ) : (
+                    <h2>No records with these details</h2>
+                )
             ) : (
-                <h2>No records with these details</h2>
+                <Loader />
             )}
         </main>
     );

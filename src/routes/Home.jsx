@@ -8,8 +8,6 @@ import MyAccount from "./MyAccount";
 import SearchCustomer from "./SearchCustomer";
 import SearchMovie from "./SearchMovie";
 import AddMovie from "./AddMovie";
-import StaffHelp from "./StaffHelp";
-import ManagerHelp from "./managers/ManagerHelp";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -27,7 +25,6 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import MovieIcon from "@mui/icons-material/Movie";
 import BadgeIcon from "@mui/icons-material/Badge";
 import VideoCallIcon from "@mui/icons-material/VideoCall";
-import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import StoreIcon from "@mui/icons-material/Store";
 import AddReactionIcon from "@mui/icons-material/AddReaction";
@@ -44,11 +41,10 @@ export default function Home() {
     const [addCustomer, setAddCustomer] = useState(false);
     const [searchMovie, setSearchMovie] = useState(false);
     const [addMovie, setAddMovie] = useState(false);
-    const [staffHelp, setStaffHelp] = useState(false);
+
     const [searchEmployee, setSearchEmployee] = useState(false);
     const [addEmployee, setAddEmployee] = useState(false);
-    const [searchStores, setSearchStores] = useState(false);
-    const [managerHelp, setManagerHelp] = useState(false);
+    const [stores, setStores] = useState(false);
 
     const viewArray = [
         setAccount,
@@ -56,11 +52,10 @@ export default function Home() {
         setAddCustomer,
         setSearchMovie,
         setAddMovie,
-        setStaffHelp,
+
         setSearchEmployee,
         setAddEmployee,
-        setSearchStores,
-        setManagerHelp,
+        setStores,
     ];
 
     const handleBoxView = (view) => {
@@ -160,17 +155,7 @@ export default function Home() {
                     <ListItemText primary="Add Movie" />
                 </ListItemButton>
             </ListItem>
-            <ListItem
-                disablePadding
-                onClick={() => handleBoxView(setStaffHelp)}
-            >
-                <ListItemButton>
-                    <ListItemIcon>
-                        <HelpCenterIcon color="error" />
-                    </ListItemIcon>
-                    <ListItemText primary="Help" />
-                </ListItemButton>
-            </ListItem>
+
             {/* //TODO: DO NOT SHOW BELOW SECTION IF NOT MANAGER */}
             {true && (
                 <>
@@ -208,24 +193,13 @@ export default function Home() {
                     </ListItem>
                     <ListItem
                         disablePadding
-                        onClick={() => handleBoxView(setSearchStores)}
+                        onClick={() => handleBoxView(setStores)}
                     >
                         <ListItemButton>
                             <ListItemIcon>
                                 <StoreIcon color="error" />
                             </ListItemIcon>
                             <ListItemText primary="Search Stores" />
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem
-                        disablePadding
-                        onClick={() => handleBoxView(setManagerHelp)}
-                    >
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <HelpCenterIcon color="error" />
-                            </ListItemIcon>
-                            <ListItemText primary="Help" />
                         </ListItemButton>
                     </ListItem>
                 </>
@@ -312,11 +286,9 @@ export default function Home() {
                 {addCustomer && <AddCustomer />}
                 {searchMovie && <SearchMovie />}
                 {addMovie && <AddMovie />}
-                {staffHelp && <StaffHelp />}
                 {searchEmployee && <SearchEmployee />}
                 {addEmployee && <AddEmployee />}
-                {searchStores && <Stores />}
-                {managerHelp && <ManagerHelp />}
+                {stores && <Stores />}
             </Box>
         </Box>
     );

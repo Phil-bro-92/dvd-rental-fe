@@ -3,10 +3,12 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import IndvMovie from "../components/IndvMovie";
+import Loader from "../components/Loader";
 
 export default function SearchMovie() {
     const url = process.env.REACT_APP_API_URL;
     const [movies, setMovies] = useState([]);
+    const [loader, setLoader] = useState(true);
 
     useEffect(() => {
         axios
@@ -14,6 +16,9 @@ export default function SearchMovie() {
             .then((res) => {
                 console.log(res.data);
                 setMovies(res.data);
+                setTimeout(() => {
+                    setLoader(false);
+                }, 3500);
             })
             .catch((err) => {
                 console.log(err);
@@ -38,37 +43,43 @@ export default function SearchMovie() {
     return (
         <main className="search_movies">
             <h1>Movies</h1>{" "}
-            <section className="search_inputs">
-                {" "}
-                <TextField
-                    className="input_field"
-                    type="text"
-                    label="Search by Movie Name"
-                    variant="standard"
-                    onChange={(e) => searchMovie(e.target.value)}
-                />
-            </section>
-            {movies.length > 0 ? (
-                <table className="movie_table">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Release Year</th>
-                            <th>Length</th>
-                            <th>Rating</th>
-                            <th>Language</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {movies &&
-                            movies.map((movie, i) => {
-                                return <IndvMovie key={i} movie={movie} />;
-                            })}
-                    </tbody>
-                </table>
+            {!loader ? (
+                <section className="search_inputs">
+                    {" "}
+                    <TextField
+                        className="input_field"
+                        type="text"
+                        label="Search by Movie Name"
+                        variant="standard"
+                        onChange={(e) => searchMovie(e.target.value)}
+                    />
+                </section>
+            ) : null}
+            {!loader ? (
+                movies.length > 0 ? (
+                    <table className="movie_table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Release Year</th>
+                                <th>Length</th>
+                                <th>Rating</th>
+                                <th>Language</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {movies &&
+                                movies.map((movie, i) => {
+                                    return <IndvMovie key={i} movie={movie} />;
+                                })}
+                        </tbody>
+                    </table>
+                ) : (
+                    <h2>No Movies found</h2>
+                )
             ) : (
-                <h2>No Movies found</h2>
+                <Loader />
             )}
         </main>
     );
