@@ -1,5 +1,6 @@
 import "../styles/home.scss";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AddEmployee from "./managers/AddEmployee";
 import SearchEmployee from "./managers/SearchEmployee";
 import Stores from "./managers/Stores";
@@ -29,10 +30,12 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import StoreIcon from "@mui/icons-material/Store";
 import AddReactionIcon from "@mui/icons-material/AddReaction";
 import ContactsIcon from "@mui/icons-material/Contacts";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const drawerWidth = 240;
 
 export default function Home() {
+    const navigate = useNavigate();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
 
@@ -85,6 +88,11 @@ export default function Home() {
         if (!isClosing) {
             setMobileOpen(!mobileOpen);
         }
+    };
+
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate("/");
     };
 
     const drawer = (
@@ -147,17 +155,17 @@ export default function Home() {
                     <ListItemText primary="Search Movie" />
                 </ListItemButton>
             </ListItem>
-            <ListItem disablePadding onClick={() => handleBoxView(setAddMovie)}>
+            {/* <ListItem disablePadding onClick={() => handleBoxView(setAddMovie)}>
                 <ListItemButton>
                     <ListItemIcon>
                         <VideoCallIcon color="error" />
                     </ListItemIcon>
                     <ListItemText primary="Add Movie" />
                 </ListItemButton>
-            </ListItem>
+            </ListItem> */}
 
             {/* //TODO: DO NOT SHOW BELOW SECTION IF NOT MANAGER */}
-            {true && (
+            {/* {true && (
                 <>
                     <Divider />
                     <ListItem
@@ -202,8 +210,16 @@ export default function Home() {
                             <ListItemText primary="Search Stores" />
                         </ListItemButton>
                     </ListItem>
+                    <ListItem disablePadding onClick={handleLogout}>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <LogoutIcon color="error" />
+                            </ListItemIcon>
+                            <ListItemText primary="Logout" />
+                        </ListItemButton>
+                    </ListItem>
                 </>
-            )}
+            )} */}
         </div>
     );
 

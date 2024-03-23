@@ -74,17 +74,25 @@ export default function SearchCustomer() {
                     {" "}
                     <TextField
                         className="input_field"
+                        id="customer_name"
                         type="text"
                         label="Search by customer name"
                         variant="standard"
-                        onChange={(e) => searchCustomer(e.target.value)}
+                        onChange={(e) => {
+                            searchCustomer(e.target.value);
+                            document.getElementById("customer_id").value = "";
+                        }}
                     />
                     <TextField
                         className="input_field"
+                        id="customer_id"
                         type="number"
                         label="Search by customer ID"
                         variant="standard"
-                        onChange={(e) => searchCustomerId(e.target.value)}
+                        onChange={(e) => {
+                            searchCustomerId(e.target.value);
+                            document.getElementById("customer_name").value = "";
+                        }}
                     />
                 </section>
             ) : null}

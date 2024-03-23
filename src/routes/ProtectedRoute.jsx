@@ -1,3 +1,17 @@
-export default function ProtectedRoute() {
-    return <main>PROTECTED ROUTE</main>;
-}
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+const ProtectedRoute = ({ children }) => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const user = localStorage.getItem("user");
+        if (!user) {
+            navigate("/");
+        }
+    }, []);
+
+    return children;
+};
+
+export default ProtectedRoute;

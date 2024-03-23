@@ -33,21 +33,12 @@ export default function Login() {
     };
 
     const handleLogin = () => {
-        const secretKey = crypto.getRandomValues(new Uint8Array(32));
-
-        // Convert the byte array to a hexadecimal string representation
-        const hexKey = Array.from(secretKey)
-            .map((byte) => byte.toString(16).padStart(2, "0"))
-            .join("");
-        const encryptedPassword = CryptoJS.AES.encrypt(
-            password,
-            hexKey
-        ).toString();
-
-        let data = {
+        const data = {
             email: email,
-            password: encryptedPassword,
+            password: password,
         };
+
+        console.log(data);
 
         if (email === "" || password === "") {
             setMessage("Please complete all required fields");
@@ -74,7 +65,7 @@ export default function Login() {
                     console.log(res.data);
                     const user = JSON.stringify(res.data);
                     // const token = res.data.token;
-                    localStorage.setItem("customer", user);
+                    localStorage.setItem("user", user);
                     // localStorage.setItem("token", token);
                     navigate("/home ");
                 })
